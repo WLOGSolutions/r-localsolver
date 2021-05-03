@@ -1,0 +1,31 @@
+News for localsolver
+CHANGES IN 2.4.1:
+  * Fixed package DESCRIPTION to properly declare knitr usage as vignette builder
+  * Repo moved to GitHub
+
+CHANGES IN 2.4:
+  * Marked examples with \donttest as they require presence of LocalSolver in environment
+    (obviously CRAN farm does not contain it).
+  * Demos do not raise error if LocalSolver is not detected in environment: just write
+    appropriate message.
+  * Removed vignette as code it contains cannot be built without LocalSolver installed.
+
+CHANGES IN 2.3:
+  * Changed Authors in DESCRIPTION to contain single Maintainer.
+
+CHANGES IN 2.2:
+  * Updated package DESCRIPTION to conform CRAN policy.
+  * Configured to build vignette from source with knitr.
+
+CHANGES IN 2.1:
+  * add.decision.var removed from API as same effect can be achieved with use of output exprs.
+  * detection of objective expressions removed for the same reason
+  * model text is required to be sequence of functions
+  * new demos have been added
+
+CHANGES IN 2.0:
+  * The NEWS file has been created.
+  * Package API changed completely
+  * Demos adapted to new API.
+  * Verified that package passes all standard checks
+

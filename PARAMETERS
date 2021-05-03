@@ -1,0 +1,6 @@
+RSuiteVersion: 0.38
+RVersion: 3.6
+Project: r-localsolver
+Repositories: MRAN[2021-05-03]
+Artifacts: config_templ.txt
+ZipVersion: 0.1

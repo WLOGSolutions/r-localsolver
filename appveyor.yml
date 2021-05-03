@@ -1,0 +1,79 @@
+# DO NOT CHANGE the "init" and "install" sections below
+
+# Download script file from GitHub
+init:
+  ps: |
+        $ErrorActionPreference = "Stop"
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Import-Module '..\appveyor-tool.ps1'
+
+install:
+  - cmd: echo %RTOOLS_VERSION%
+  - ps: Bootstrap
+  - cmd: choco install pandoc
+
+cache:
+  - C:\RLibrary_20181125
+
+# Adapt as necessary starting from here
+
+environment:
+  global:
+     USE_RTOOLS: true
+     WARNINGS_ARE_ERRORS: 1
+
+  matrix:
+  - R_VERSION: devel
+    RTOOLS_VERSION: 34
+  - R_VERSION: release
+    RTOOLS_VERSION: 34
+  - R_VERSION: oldrel
+    RTOOLS_VERSION: 34
+  - R_VERSION: 3.3.0
+    RTOOLS_VERSION: 34
+
+
+build_script:
+  - cmd: >-
+
+      del .Rprofile
+
+      Rscript -e "install.packages(c('devtools'), repos='https://cran.r-project.org')"
+
+      Rscript -e "devtools::install_deps(pkg = 'packages/localsolver',dep = T)"
+
+      Rscript -e "devtools::document(pkg = 'packages/localsolver')"
+
+      R CMD build .\packages\localsolver
+
+      R CMD check .\*tar.gz --no-manual
+
+test_script:
+  - cmd: Rscript -e "devtools::install('./packages/localsolver')"
+
+on_failure:
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
+
+on_finish:
+  - 7z a logs.zip tests\logs*
+  - appveyor PushArtifact logs.zip
+
+artifacts:
+  - path: '*.Rcheck\**\*.log'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.out'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.fail'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.Rout'
+    name: Logs
+
+  - path: '\*_*.tar.gz'
+    name: Bits
+
+  - path: '\*_*.zip'
+    name: Bits

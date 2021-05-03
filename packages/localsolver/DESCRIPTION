@@ -1,0 +1,42 @@
+Package: localsolver
+Type: Package
+Title: R API to LocalSolver
+Description: The package converts R data onto input and data for LocalSolver,
+    executes optimization and exposes optimization results as R data.
+    LocalSolver (http://www.localsolver.com/) is an optimization engine
+    developed by Innovation24 (http://www.innovation24.fr/). It is designed to
+    solve large-scale mixed-variable non-convex optimization problems.  The
+    localsolver package is developed and maintained by WLOG Solutions
+    (http://www.wlogsolutions.com/en/) in collaboration with Decision Support
+    and Analysis Division at Warsaw School of Economics
+    (http://www.sgh.waw.pl/en/).
+Version: 2.4.1
+Encoding: UTF-8
+Date: 2021-05-03
+Author: Walerian Sokolowski [aut, cre, cph],
+    Wit Jakuczun [aut, cph],
+    Natalia Okinczyc [aut],
+    Bogumil Kaminski [aut]
+Authors@R: c(
+    person("Walerian", "Sokolowski",
+    role = c("aut", "cre", "cph"),
+    email = "walerian.sokolowski@wlogsolutions.com"),
+    person("Wit", "Jakuczun",
+    role = c("aut", "cph"),
+    email = "Wit.Jakuczun@wlogsolutions.com"),
+    person("Natalia", "Okinczyc",
+    role = "aut",
+    email = "natalia.okinczyc@wlogsolutions.com"),
+    person("Bogumil", "Kaminski",
+    role = "aut",
+    email = "bkamins@sgh.waw.pl"))
+License: LGPL-2.1
+Depends:
+    R (>= 3.0.1)
+Suggests: 
+  knitr, 
+  rmarkdown
+VignetteBuilder: knitr
+SystemRequirements: At least trial version of LocalSolver (tested on v4.0) to be
+    downloaded from http://www.localsolver.com/download.html
+RoxygenNote: 6.1.1

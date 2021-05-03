@@ -1,0 +1,45 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: r
+
+os:
+- linux
+- osx
+
+r:
+- oldrel
+- release
+- devel
+- 3.3.0
+- 3.2.5
+
+env:
+- TravisCI=true
+
+cache: packages
+warnings_are_errors: true
+
+matrix:
+  exclude:
+  - os: osx
+    r: devel
+  - os: osx
+    r: oldrel
+
+before_install:
+- export TZ=UTC
+- cd packages/localsolver
+- rm -rf .Rprofile
+
+install:
+- if [ "$TRAVIS_R_VERSION_STRING" == "3.2.5" ]; then export R_REPOS="'https://mran.microsoft.com/snapshot/2020-07-01/'"; else export R_REPOS="getOption('repos')"; fi
+- Rscript -e "devtools::install_deps(deps = T, repos = ${R_REPOS})"
+- Rscript -e "devtools::document()"
+
+script:
+- R CMD build .
+- R CMD check *tar.gz
+- Rscript -e "devtools::install(repos = ${R_REPOS})"
+
+after_script:
+- cat logs/*
